@@ -1,0 +1,25 @@
+.select-title {
+  width: 100%;
+  height: max-content;
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+
+  /*  */
+
+  margin-bottom: 5px;
+}
+
+.select-subtitle {
+
+  width: 100%;
+  height: max-content;
+  font-size: 10px;
+  font-weight: 200;
+  color: #ffffff;
+
+  /*  */
+
+  margin-bottom: 5px;
+
+}

@@ -1,0 +1,25 @@
+.footer-title {
+  width: 100%;
+  height: max-content;
+  font-size: 12px;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.footer-subtitle {
+  text-align: center;
+  width: 100%;
+  height: max-content;
+  font-size: 10px;
+  font-weight: 300;
+  color: #FFFFFF;
+}
+
+
+
+/*  */
+
+
+.soc-img:hover {
+  transform:  scale(1.15);
+}

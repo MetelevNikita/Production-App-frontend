@@ -1,0 +1,20 @@
+.mybtn {
+  width: 100%;
+  height: 45px;
+  border-radius: 5px;
+  border: 1px solid white;
+  color: white;
+
+  /* transittion */
+
+  transition: 0.05s all ease;
+}
+
+.mybtn:hover {
+  border: 0px solid white;
+  background-color: #00B0E1;
+}
+
+.mybtn:active {
+  transform: scale(1.05);
+}

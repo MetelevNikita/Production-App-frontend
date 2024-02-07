@@ -1,5 +1,9 @@
 import { FC } from 'react'
 
+// css
+
+import './MyButton.css'
+
 
 interface Button {
   title: string
@@ -8,7 +12,7 @@ interface Button {
 
 const MyButton : FC<Button> = ({ title, onClick }) => {
   return (
-    <button onClick={onClick}>{title}</button>
+    <button className='mybtn' onClick={onClick}>{title}</button>
   )
 }
 

@@ -1,11 +1,12 @@
 
 export type CardType = {
-  
+
   id: string,
   name: string,
   phone: string
   email: string,
-  typeProduct: string,
+  typeProduct: any,
+  otherProduct?: string
   promotion: string,
   typeWork: any,
   target: string
