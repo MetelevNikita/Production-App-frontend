@@ -72,10 +72,10 @@ const App = () => {
 
   // Yougile
 
-  useEffect(() => {
-    getApiKeyYougile()
-    getAllCard()
-  }, [])
+  // useEffect(() => {
+  //   getApiKeyYougile()
+  //   getAllCard()
+  // }, [])
 
 
   const url = 'https://ru.yougile.com/api-v2/'
@@ -190,33 +190,41 @@ const App = () => {
   }
 
 
-
-
-
   // Create new Card
 
   const createNewCard = () => {
-    createYGCard()
-    createFirestoreDoc()
-    setCard({
-      id: id,
-      name: '',
-      phone: '',
-      email: '',
-      typeProduct: typeProduct[0],
-      otherProduct: '',
-      promotion: '',
-      typeWork: typeWork[0],
-      target: '',
-      viewer: '',
-      effect: '',
-      description: '',
-      voiceover: '',
-      timing: '',
-      place:'',
-      technicalSpecification: '',
-      deadline: ''
-    })
+
+    if(card.name !== '' && card.phone !== '' && card.email !== '' && card.promotion !== '' && card.target !== '' && card.viewer !== '' && card.effect !== '' && card.description !== '' && card.voiceover !== '' && card.timing !== '' && card.place !== '' && card.technicalSpecification !== '' && card.deadline !== '') {
+
+      createYGCard()
+      createFirestoreDoc()
+      setCard({
+        id: id,
+        name: '',
+        phone: '',
+        email: '',
+        typeProduct: typeProduct[0],
+        otherProduct: '',
+        promotion: '',
+        typeWork: typeWork[0],
+        target: '',
+        viewer: '',
+        effect: '',
+        description: '',
+        voiceover: '',
+        timing: '',
+        place:'',
+        technicalSpecification: '',
+        deadline: ''
+      })
+
+      alert('Карточка успешно создана')
+
+    } else {
+      return alert('Заполните все поля')
+    }
+
+
 
   }
 

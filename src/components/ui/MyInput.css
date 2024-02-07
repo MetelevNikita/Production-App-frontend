@@ -7,7 +7,7 @@
 
   /*  */
 
-  margin-bottom: 5px;
+  margin-bottom: 0px;
 
 
 
@@ -17,7 +17,8 @@
 .input-subtitle {
   width: 100%;
   height: max-content;
-  font-size: 10px;
+  font-size: 13px;
+  line-height: 17px;
   font-weight: 200;
   color: #ffffff;
 
@@ -37,3 +38,11 @@
 
 }
 
+
+
+input::placeholder {
+
+ font-size: 14px;
+ color: rgb(102, 102, 102);
+
+}

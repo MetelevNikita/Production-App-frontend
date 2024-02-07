@@ -1,8 +1,9 @@
 .header-title {
   width: 100%;
   height: max-content;
-  font-size: 14px;
-  font-weight: 600;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 300;
   color: #FFFFFF;
 
   /*  */
@@ -14,7 +15,8 @@
 
   width: 100%;
   height: max-content;
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 20px;
   font-weight: 300;
   color: #FFFFFF;
 

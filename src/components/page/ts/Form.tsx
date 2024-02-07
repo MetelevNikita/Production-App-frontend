@@ -39,23 +39,23 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
 
 
-        <MyInput place='введите ФИО' type='text' title='Заказчик' subtitle='ФИО, название отдела' value={card.name} onChange={(e) => {setCard({...card, name: e.target.value})}}></MyInput>
+        <MyInput place='фио' type='text' title='Заказчик' subtitle='ФИО, название отдела' value={card.name} onChange={(e) => {setCard({...card, name: e.target.value})}}></MyInput>
 
-        <MyInput place='Контактный телефон' type='tel' title='Контактный телефон' value={card.phone} onChange={(e) => {setCard({...card, phone: e.target.value})}}></MyInput>
+        <MyInput place='контактный телефон' type='tel' title='Контактный телефон' value={card.phone} onChange={(e) => {setCard({...card, phone: e.target.value})}}></MyInput>
 
-        <MyInput place='Ваша почта' type='email' title='Ваша почта' subtitle='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н.' value={card.email} onChange={(e) => {setCard({...card, email: e.target.value})}}></MyInput>
+        <MyInput place='ваша почта' type='email' title='Ваша почта' subtitle='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н.' value={card.email} onChange={(e) => {setCard({...card, email: e.target.value})}}></MyInput>
 
         {/* select */}
 
         <MySelect title='Тип продукта' option={typeProduct} onChange={(e) => setCard({...card, typeProduct: e})} defaultValue={typeProduct[0]}></MySelect>
 
-        {(card.typeProduct.value === 'other') ? <MyInput place='введите текст' type='text' title='Другой тип продукта' value={card.otherProduct} onChange={(e) => {setCard({...card, otherProduct: e.target.value})}}></MyInput> : <></>}
+        {(card.typeProduct.value === 'other') ? <MyInput place='введите текст' type='text' title='другой тип продукта' value={card.otherProduct} onChange={(e) => {setCard({...card, otherProduct: e.target.value})}}></MyInput> : <></>}
 
 
         {/*  */}
 
 
-        <MyInput place='Сопутствующие продукты для фильма' type='text' title='Сопутствующие продукты для фильма' subtitle='Какое продвижение планируется? Нужны ли анонсы/новостные сюжеты? (заполняется только при изготовления фильма)' value={card.promotion} onChange={(e) => {setCard({...card, promotion: e.target.value})}}></MyInput>
+        <MyInput place='сопутствующие продукты для фильма' type='text' title='Сопутствующие продукты для фильма' subtitle='Какое продвижение планируется? Нужны ли анонсы/новостные сюжеты? (заполняется только при изготовления фильма)' value={card.promotion} onChange={(e) => {setCard({...card, promotion: e.target.value})}}></MyInput>
 
         {/* select */}
 
