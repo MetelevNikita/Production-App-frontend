@@ -12,6 +12,7 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Form from './components/page/ts/Form';
 import Header from './components/page/ts/Header';
 import Footer from './components/page/ts/Footer';
+import ModalCreateCard from './components/modals/ModalCreateCard';
 
 // types
 
@@ -36,12 +37,11 @@ const App = () => {
 
 
   const id = uuidv4().split('').slice(0, 8).join('')
-
   const [card, setCard] = useState<CardType>({
     id: id,
     name: '',
     phone: '',
-    email: '',
+    tgId: '',
     typeProduct: typeProduct[0],
     otherProduct: '',
     promotion: '',
@@ -57,6 +57,7 @@ const App = () => {
     deadline: ''
   })
 
+  const [modalCreate, setModalCreate] = useState<boolean>(false)
 
   const newDate = new Date(card.deadline)
   const timestamp = newDate.getTime()
@@ -64,18 +65,20 @@ const App = () => {
 
 
 
+
   const message = (card : any) => {
-    return `Имя\n${card.name}\nТелефон\n${card.phone}\nПочта\n${card.email}\nТип продукта\n${card.typeProduct.label}\n Другое\n${card.otherProduct}\nСопутствующие продукты для фильма\n${card.promotion}\nТип Работ\n${card.typeWork.label}\nДля какой большой цели нужен продукт?\n${card.target}\nКто является конечным зрителем и география его проживания?\n${card.viewer}\nКакой эффект должен произвести продукт на зрителя?\n${card.effect}\nОпишите содержание ролика\n${card.description}\nЗакадровый текст\n${card.voiceover}\nХронометраж\n${card.timing}\nПлощадки для размещения\n${card.place}\nТехническая спецификация\n${card.technicalSpecification}\nДата выхода\n${card.deadline}\n`
+    return `№${card.id}\nИмя\n${card.name}\nТелефон\n${card.phone}\nTelegramID\n${card.tgId}\nТип продукта\n${card.typeProduct.label}\n Другое\n${card.otherProduct}\nСопутствующие продукты для фильма\n${card.promotion}\nТип Работ\n${card.typeWork.label}\nДля какой большой цели нужен продукт?\n${card.target}\nКто является конечным зрителем и география его проживания?\n${card.viewer}\nКакой эффект должен произвести продукт на зрителя?\n${card.effect}\nОпишите содержание ролика\n${card.description}\nЗакадровый текст\n${card.voiceover}\nХронометраж\n${card.timing}\nПлощадки для размещения\n${card.place}\nТехническая спецификация\n${card.technicalSpecification}\nДата выхода\n${card.deadline}\n`
   }
+
 
 
 
   // Yougile
 
-  // useEffect(() => {
-  //   getApiKeyYougile()
-  //   getAllCard()
-  // }, [])
+  useEffect(() => {
+    getApiKeyYougile()
+    getAllCard()
+  }, [])
 
 
   const url = 'https://ru.yougile.com/api-v2/'
@@ -125,7 +128,7 @@ const App = () => {
       }
 
     }).then(responce => responce.json())
-      .then(data => console.log(data))
+      .then(data => data)
   }
 
 
@@ -133,15 +136,23 @@ const App = () => {
     const prodKey = localStorage.getItem('ProdKey')
     const prodBoard = localStorage.getItem('ProdBoard')
 
-    return await fetch(`${url}tasks`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${prodKey}`
-      },
-      body: JSON.stringify({title: `№${card.id}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp} })
-    }).then(responce => responce.json())
-      .then(data => console.log(data))
+    try {
+
+      return await fetch(`${url}tasks`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${prodKey}`
+        },
+        body: JSON.stringify({title: `№${card.tgId}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
+      }).then(responce => responce.json())
+        .then(data => data)
+
+    } catch (error) {
+
+      console.log(error)
+
+    }
 
   }
 
@@ -150,7 +161,6 @@ const App = () => {
 
   // firebase
 
-
   const createFirestoreDoc = async () => {
     const db = getFirestore(app);
     try {
@@ -158,7 +168,7 @@ const App = () => {
       const docRef = await addDoc(collection(db, "cards"), {
         name: card.name,
         phone: card.phone,
-        email: card.email,
+        tgId: card.tgId,
         typeProduct: card.typeProduct.label,
         promotion: card.promotion,
         typeWork: card.typeWork.label,
@@ -171,15 +181,6 @@ const App = () => {
         place: card.place,
         technicalSpecification: card. technicalSpecification,
         deadline: card.deadline
-
-
-
-
-
-
-
-
-
       })
 
       console.log(`Document is Create ${docRef.id}` )
@@ -189,48 +190,48 @@ const App = () => {
     }
   }
 
-
   // Create new Card
 
   const createNewCard = () => {
 
-    if(card.name !== '' && card.phone !== '' && card.email !== '' && card.promotion !== '' && card.target !== '' && card.viewer !== '' && card.effect !== '' && card.description !== '' && card.voiceover !== '' && card.timing !== '' && card.place !== '' && card.technicalSpecification !== '' && card.deadline !== '') {
+    try {
 
-      createYGCard()
-      createFirestoreDoc()
-      setCard({
-        id: id,
-        name: '',
-        phone: '',
-        email: '',
-        typeProduct: typeProduct[0],
-        otherProduct: '',
-        promotion: '',
-        typeWork: typeWork[0],
-        target: '',
-        viewer: '',
-        effect: '',
-        description: '',
-        voiceover: '',
-        timing: '',
-        place:'',
-        technicalSpecification: '',
-        deadline: ''
-      })
+        createYGCard()
+        SendToTelegram()
+        createFirestoreDoc()
+        setCard({
+          id: id,
+          name: '',
+          phone: '',
+          tgId: '',
+          typeProduct: typeProduct[0],
+          otherProduct: '',
+          promotion: '',
+          typeWork: typeWork[0],
+          target: '',
+          viewer: '',
+          effect: '',
+          description: '',
+          voiceover: '',
+          timing: '',
+          place:'',
+          technicalSpecification: '',
+          deadline: ''
+        })
+        setModalCreate(true)
 
-      alert('Карточка успешно создана')
 
-    } else {
-      return alert('Заполните все поля')
+    } catch (error) {
+
+      console.log(error)
+
     }
 
 
 
   }
 
-
   // Clear card
-
 
   const clearSelectCard = () => {
 
@@ -238,7 +239,7 @@ const App = () => {
         id: id,
         name: '',
         phone: '',
-        email: '',
+        tgId: '',
         typeProduct: typeProduct[0],
         otherProduct: '',
         promotion: '',
@@ -255,6 +256,36 @@ const App = () => {
       })
   }
 
+
+
+
+
+  // sendToTelegram
+
+
+  const SendToTelegram = async () => {
+    const TOKEN = '6561343238:AAHQWfNwKLmEu-hlH_y6M00MUB_XyZqTzk8'
+    const CHAT_ID = '-4171897222'
+    const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
+
+    try {
+
+      const responce = await fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({chat_id: CHAT_ID, parse_mode: 'html', text: message(card)})
+      })
+
+      const data = await responce.json()
+
+    } catch (error) {
+
+      console.log(error)
+
+    }
+  }
 
 
 
@@ -272,6 +303,9 @@ const App = () => {
             <Form cards={{card, setCard}} createCard={createNewCard} clearCard={clearSelectCard}></Form>
 
             <Footer></Footer>
+
+
+            {(modalCreate === true) ? <ModalCreateCard modal={{modalCreate, setModalCreate}}/> : <></>}
 
 
 

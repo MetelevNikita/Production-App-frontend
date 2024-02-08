@@ -4,7 +4,7 @@ export type CardType = {
   id: string,
   name: string,
   phone: string
-  email: string,
+  tgId: string,
   typeProduct: any,
   otherProduct?: string
   promotion: string,

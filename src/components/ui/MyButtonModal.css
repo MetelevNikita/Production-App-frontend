@@ -1,0 +1,21 @@
+.modal-btn-container {
+  background-color: rgba(0, 176, 225, 1);
+  border-radius: 5px;
+  width: 284px;
+  height: 45px;
+  cursor: pointer;
+
+}
+
+.modal-btn-img {
+
+  margin-right: 10px;
+}
+
+.modal-btn-text {
+  font-size:  15px;
+  font-weight: 700;
+  line-height: 22.5px;
+  color: white;
+
+}

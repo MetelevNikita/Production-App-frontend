@@ -15,6 +15,7 @@ import MyButton from '../../ui/MyButton'
 import MySelect from '../../ui/MySelect'
 
 
+
 // server
 
 import { typeProduct } from '../../server/server'
@@ -33,6 +34,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
   const {card, setCard} = cards
 
 
+
   return (
 
       <Col md={12} className='d-flex flex-column '>
@@ -43,7 +45,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
         <MyInput place='контактный телефон' type='tel' title='Контактный телефон' value={card.phone} onChange={(e) => {setCard({...card, phone: e.target.value})}}></MyInput>
 
-        <MyInput place='ваша почта' type='email' title='Ваша почта' subtitle='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н.' value={card.email} onChange={(e) => {setCard({...card, email: e.target.value})}}></MyInput>
+        <MyInput place='telegram id' type='text' title='Telegram ID' subtitle='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н. ВНИМАНИЕ!!! telegram id можно посмотреть в профиле corp сайта' value={card.tgId} onChange={(e) => {setCard({...card, tgId: e.target.value})}}></MyInput>
 
         {/* select */}
 
@@ -99,15 +101,6 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
           <Col className='mb-3' md={4} sm={12} xs={12}><MyButton title='Очистить форму' onClick={() => {clearCard()}}></MyButton></Col>
 
         </Row>
-
-
-
-
-
-
-
-
-
 
 
       </Col>
