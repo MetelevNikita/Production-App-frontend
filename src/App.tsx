@@ -196,6 +196,8 @@ const App = () => {
 
     try {
 
+      if(card.name !== '', card.phone !== '',  card.tgId !== '', card.promotion !== '', card.target !== '', card.viewer !== '', card.effect !== '', card.description !== '', card.voiceover !== '', card.timing !== '', card.place !== '', card.technicalSpecification !== '', card.deadline !== '') {
+
         createYGCard()
         SendToTelegram()
         createFirestoreDoc()
@@ -219,6 +221,10 @@ const App = () => {
           deadline: ''
         })
         setModalCreate(true)
+
+      } else {
+        alert('Заполните все поля')
+      }
 
 
     } catch (error) {

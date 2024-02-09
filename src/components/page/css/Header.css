@@ -1,4 +1,5 @@
 .header-title {
+  text-align: center;
   width: 100%;
   height: max-content;
   font-size: 16px;
@@ -12,7 +13,7 @@
 }
 
 .header-subtitle {
-
+  text-align: center;
   width: 100%;
   height: max-content;
   font-size: 16px;
@@ -23,6 +24,22 @@
   /*  */
 
   margin-bottom: 5px;
+}
+
+
+.header-subtitle-bot {
+  text-align: center;
+  width: 100%;
+  height: max-content;
+  font-size: 16px;
+  line-height: 20px;
+  font-weight: 600;
+  color: #FFFFFF;
+
+  /*  */
+
+  margin-bottom: 5px;
+
 }
 
 

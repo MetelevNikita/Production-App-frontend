@@ -30,9 +30,11 @@ const Header = () => {
 
             <Col md={8} className='d-flex justify-content-center align-items-center mt-3 mb-4'><img className='prod-img' src={PROD} alt="production" /></Col>
 
-            <Col className='mt-2' md={8}><div className='header-title'>Перед началом заполнения тех. задания согласуйте продукт и его цель с Эделевой О.Н. ТЗ заполняется чётко, полно и согласно запросу. <br/> Для изготовления продукта в короткие сроки - свяжитесь с нами для согласования. </div></Col>
+            <Col className='mt-2' md={8}><div className='header-title'>Перед началом заполнения тех. задания согласуйте продукт и его цель с Эделевой О.Н. ТЗ заполняется чётко, полно и согласно запросу. Для изготовления продукта в короткие сроки - свяжитесь с нами для согласования. </div></Col>
 
             <Col md={8} className='mt-2'><div className='header-subtitle'>После заполнения ТЗ обязательно свяжитесь с нами: <br/> 8-927-953-05-89 Елизавета <br/>8-999-134-43-56 Екатерина</div></Col>
+
+            <Col md={8} className='mt-2'><div className='header-subtitle-bot'>Для корректной работы сервиса необходима в поиске телеграма подписаться на бота @utv_work_bot для получения уведомлений о статусе вашей заявки</div></Col>
 
 
 
