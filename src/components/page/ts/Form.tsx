@@ -45,7 +45,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
         <MyInput place='фио' type='text' title='Заказчик' subtitle='ФИО, название отдела' value={card.name} onChange={(e) => {setCard({...card, name: e.target.value})}}></MyInput>
 
-        <MyInput place='контактный телефон' type='tel' title='Контактный телефон' value={card.phone} onChange={(e) => {setCard({...card, phone: e.target.value})}}></MyInput>
+        <MyInput place='контактный телефон' type='number' title='Контактный телефон' value={card.phone} onChange={(e) => {setCard({...card, phone: e.target.value})}}></MyInput>
 
         <MyInput place='telegram id' type='text' title='Telegram ID' subtitle='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н. ВНИМАНИЕ!!! telegram id можно посмотреть в профиле corp сайта' value={card.tgId} onChange={(e) => {setCard({...card, tgId: e.target.value})}}></MyInput>
 

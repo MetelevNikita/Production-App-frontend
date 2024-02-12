@@ -7,6 +7,7 @@ import U from './../../../asset/logo/U.svg'
 import T from './../../../asset/logo/T.svg'
 import V from './../../../asset/logo/V.svg'
 import PROD from './../../../asset/logo/prod.svg'
+import QR from './../../../asset/qr-code.svg'
 
 // css
 
@@ -30,11 +31,24 @@ const Header = () => {
 
             <Col md={8} className='d-flex justify-content-center align-items-center mt-3 mb-4'><img className='prod-img' src={PROD} alt="production" /></Col>
 
-            <Col className='mt-2' md={8}><div className='header-title'>Перед началом заполнения тех. задания согласуйте продукт и его цель с Эделевой О.Н. ТЗ заполняется чётко, полно и согласно запросу. Для изготовления продукта в короткие сроки - свяжитесь с нами для согласования. </div></Col>
+            <Col className='mt-2' md={6}><div className='header-title'>Перед началом заполнения технического задания согласуйте проект с Эделевой О.Н</div></Col>
 
-            <Col md={8} className='mt-2'><div className='header-subtitle'>После заполнения ТЗ обязательно свяжитесь с нами: <br/> 8-927-953-05-89 Елизавета <br/>8-999-134-43-56 Екатерина</div></Col>
 
-            <Col md={8} className='mt-2'><div className='header-subtitle-bot'>Для корректной работы сервиса необходима в поиске телеграма подписаться на бота  <a href="https://t.me/utv_work_bot" target='_blank'>@utv_work_bot</a> для получения уведомлений о статусе вашей заявки</div></Col>
+            <Row md={5} sm={5} xs={5} className='d-flex justify-content-center align-items-center mt-4'>
+
+                  <Col md={2} sm={8} xs={8} className='d-flex justify-content-center align-items-center mb-4'><img className='qr-code' src={QR} alt="qr-code" /></Col>
+
+                  <Col md={3} sm={8} xs={8} className='d-flex text-lg-left text-md-left justify-content-center align-items-center mb-4'><div className='header-subtitle-bot text-center text-xs-left'>Важно подписаться на бота  <a style={{color: '#00B0E1'}} href="https://t.me/utv_work_bot" target='_blank'>@utv_work_bot</a> для получения уведомлений о статусе вашей заявки</div></Col>
+
+
+
+
+            </Row>
+
+
+
+
+
 
 
 

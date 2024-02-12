@@ -11,7 +11,7 @@
 }
 
 
-.modal-page-container {
+.modal-alert-page-container {
   position: fixed;
   left: 50%;
   top: 50%;
@@ -21,8 +21,8 @@
   /*  */
 
   background: rgb(0, 0, 0);
-  max-width: 450px;
-  height: 380px;
+  width: 389px;
+  height: 241px;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -30,31 +30,28 @@
 
 }
 
-
-
-.modal-close-icon {
-  position: absolute;
-  top: 15px;
-  left: 400px;
+.modal-alert-box {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 
-.modal-icon-to {}
 
-.modal-title {
+
+.modal-alert-title {
+  margin-top: 10px;
+  margin-bottom: 15px;
   text-align: center;
   text-transform: uppercase;
+  line-height: 27px;
   font-size: 24px;
   font-weight: 700;
   color: rgba(0, 176, 225, 1);
 
 }
 
-.modal-subtitle {
-
-  text-align: center;
-  font-size: 16px;
-  font-weight: 400;
-  color: rgb(255, 255, 255);
-}
 

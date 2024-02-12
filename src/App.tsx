@@ -12,7 +12,11 @@ import { Container, Row, Col } from 'react-bootstrap';
 import Form from './components/page/ts/Form';
 import Header from './components/page/ts/Header';
 import Footer from './components/page/ts/Footer';
+
+// modals
+
 import ModalCreateCard from './components/modals/ModalCreateCard';
+import ModalAlarmCard from './components/modals/ModalAlarmCard';
 
 // types
 
@@ -58,6 +62,7 @@ const App = () => {
   })
 
   const [modalCreate, setModalCreate] = useState<boolean>(false)
+  const [modalAlert, setModalAlert] = useState<boolean>(true)
 
   const newDate = new Date(card.deadline)
   const timestamp = newDate.getTime()
@@ -223,7 +228,7 @@ const App = () => {
         setModalCreate(true)
 
       } else {
-        alert('Заполните все поля')
+        setModalAlert(true)
       }
 
 
@@ -312,6 +317,7 @@ const App = () => {
 
 
             {(modalCreate === true) ? <ModalCreateCard modal={{modalCreate, setModalCreate}}/> : <></>}
+            {(modalAlert === true) ? <ModalAlarmCard alert={{modalAlert, setModalAlert}}></ModalAlarmCard> : <></>}
 
 
 
