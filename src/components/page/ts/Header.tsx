@@ -34,7 +34,7 @@ const Header = () => {
 
             <Col md={8} className='mt-2'><div className='header-subtitle'>После заполнения ТЗ обязательно свяжитесь с нами: <br/> 8-927-953-05-89 Елизавета <br/>8-999-134-43-56 Екатерина</div></Col>
 
-            <Col md={8} className='mt-2'><div className='header-subtitle-bot'>Для корректной работы сервиса необходима в поиске телеграма подписаться на бота @utv_work_bot для получения уведомлений о статусе вашей заявки</div></Col>
+            <Col md={8} className='mt-2'><div className='header-subtitle-bot'>Для корректной работы сервиса необходима в поиске телеграма подписаться на бота  <a href="https://t.me/utv_work_bot" target='_blank'>@utv_work_bot</a> для получения уведомлений о статусе вашей заявки</div></Col>
 
 
 
