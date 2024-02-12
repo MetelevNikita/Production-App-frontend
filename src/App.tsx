@@ -62,7 +62,7 @@ const App = () => {
   })
 
   const [modalCreate, setModalCreate] = useState<boolean>(false)
-  const [modalAlert, setModalAlert] = useState<boolean>(true)
+  const [modalAlert, setModalAlert] = useState<boolean>(false)
 
   const newDate = new Date(card.deadline)
   const timestamp = newDate.getTime()
