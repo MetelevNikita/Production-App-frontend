@@ -13,6 +13,7 @@ import { Row, Col } from 'react-bootstrap'
 import MyInput from '../../ui/MyInput'
 import MyButton from '../../ui/MyButton'
 import MySelect from '../../ui/MySelect'
+import MyTextArea from '../../ui/MyTextArea'
 
 
 
@@ -34,14 +35,11 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
   const {card, setCard} = cards
 
 
-
-
-
   return (
 
       <Col md={12} className='d-flex flex-column '>
 
-
+        <MyInput place='название проекта' type='text' title='Название проекта' subtitle='Введите название которым в дальнейшим будет именоваться ваш продукт' value={card.title} onChange={(e) => {setCard({...card, title: e.target.value})}}></MyInput>
 
         <MyInput place='фио' type='text' title='Заказчик' subtitle='ФИО, название отдела' value={card.name} onChange={(e) => {setCard({...card, name: e.target.value})}}></MyInput>
 
@@ -76,9 +74,12 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
         <MyInput place='введите текст' type='text' title='Какой эффект должен произвести продукт на зрителя?' subtitle='Побудить зрителя подключить услуги компании; дать понимание зрителю, что он может подключить автоплатеж и это будет для него очень удобно; обучить зрителя (сотрудника) и т.д.' value={card.effect} onChange={(e) => {setCard({...card, effect: e.target.value})}}></MyInput>
 
-        <MyInput place='введите текст' type='text' title='Опишите содержание ролика' subtitle='Здесь вы можете написать краткий сценарий заказа и желаемое оформление, прикрепить референсы и ссылки с материалами.' value={card.description} onChange={(e) => {setCard({...card, description: e.target.value})}}></MyInput>
 
-        <MyInput place='введите текст' type='text' title='Напишите закадровый текст' subtitle='В именах собственных расставьте ударения(Населенные пункты, фамилии)' value={card.voiceover} onChange={(e) => {setCard({...card, voiceover: e.target.value})}}></MyInput>
+        <MyTextArea place='введите текст' title='Описание продукта' subtitle='Здесь вы можете написать краткий сценарий заказа и желаемое оформление, прикрепить референсы и ссылки с материалами.' value={card.description} onChange={(e) => {setCard({...card, description: e.target.value})}} cols={6} rows={10}></MyTextArea>
+
+
+        <MyTextArea place='введите текст' title='Напишите закадровый текст' subtitle='В именах собственных расставьте ударения(Населенные пункты, фамилии)' value={card.voiceover} onChange={(e) => {setCard({...card, voiceover: e.target.value})}} cols={6} rows={10}></MyTextArea>
+
 
         <MyInput place='введите текст' type='text' title='Хронометраж продукта' subtitle='Длительность' value={card.timing} onChange={(e) => {setCard({...card, timing: e.target.value})}}></MyInput>
 

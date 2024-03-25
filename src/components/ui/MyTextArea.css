@@ -1,0 +1,47 @@
+.input-title {
+  width: 100%;
+  height: max-content;
+  font-size: 14px;
+  font-weight: 600;
+  color: #FFFFFF;
+
+  /*  */
+
+  margin-bottom: 0px;
+
+
+
+}
+
+
+.input-subtitle {
+  width: 100%;
+  height: max-content;
+  font-size: 13px;
+  line-height: 17px;
+  font-weight: 200;
+  color: #ffffff;
+
+  /*  */
+
+  margin-bottom: 5px;
+
+}
+
+
+.input-text-area {
+  width: 100%;
+  background-color: #FFFFFF;
+  border-radius: 5px;
+  padding: 10px;
+  outline: none;
+
+}
+
+
+textarea::placeholder {
+  font-size: 14px;
+  color: rgb(102, 102, 102);
+}
+
+

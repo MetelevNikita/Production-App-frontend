@@ -39,10 +39,10 @@ import { typeWork } from './components/server/server';
 
 const App = () => {
 
-
   const id = uuidv4().split('').slice(0, 8).join('')
   const [card, setCard] = useState<CardType>({
     id: id,
+    title: '',
     name: '',
     phone: '',
     tgId: '',
@@ -68,11 +68,8 @@ const App = () => {
   const timestamp = newDate.getTime()
 
 
-
-
-
   const message = (card : any) => {
-    return `№${card.id}\nИмя\n${card.name}\nТелефон\n${card.phone}\nTelegramID\n${card.tgId}\nТип продукта\n${card.typeProduct.label}\n Другое\n${card.otherProduct}\nСопутствующие продукты для фильма\n${card.promotion}\nТип Работ\n${card.typeWork.label}\nДля какой большой цели нужен продукт?\n${card.target}\nКто является конечным зрителем и география его проживания?\n${card.viewer}\nКакой эффект должен произвести продукт на зрителя?\n${card.effect}\nОпишите содержание ролика\n${card.description}\nЗакадровый текст\n${card.voiceover}\nХронометраж\n${card.timing}\nПлощадки для размещения\n${card.place}\nТехническая спецификация\n${card.technicalSpecification}\nДата выхода\n${card.deadline}\n`
+    return `№${card.id}\n\nНазвание проекта\n\n${card.title}\n\nИмя\n\n${card.name}\n\nТелефон\n\n${card.phone}\n\nTelegramID\n\n${card.tgId}\n\nТип продукта\n\n${card.typeProduct.label}\n\nДругое\n\n${card.otherProduct}\n\nСопутствующие продукты для фильма\n\n${card.promotion}\n\nТип Работ\n\n${card.typeWork.label}\n\nДля какой большой цели нужен продукт?\n\n${card.target}\n\nКто является конечным зрителем и география его проживания?\n\n${card.viewer}\n\nКакой эффект должен произвести продукт на зрителя?\n\n${card.effect}\n\nОпишите содержание ролика\n\n${card.description}\n\nЗакадровый текст\n\n${card.voiceover}\n\nХронометраж\n\n${card.timing}\n\nПлощадки для размещения\n\n${card.place}\n\nТехническая спецификация\n\n${card.technicalSpecification}\n\n \n\n Дата выхода\n\n${card.deadline}`
   }
 
 
@@ -117,7 +114,7 @@ const App = () => {
     }).then(responce_2 => responce_2.json())
       .then((data_2 => {
         localStorage.setItem('ProdBoard', data_2.content[0].id);
-      }));
+      })).catch(err => console.log(err));
   }
 
 
@@ -134,6 +131,7 @@ const App = () => {
 
     }).then(responce => responce.json())
       .then(data => data)
+      .catch(err => console.log(err));
   }
 
 
@@ -149,14 +147,12 @@ const App = () => {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${prodKey}`
         },
-        body: JSON.stringify({title: `№${card.tgId}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
+        body: JSON.stringify({title: `№${card.id} - Название ${card.title}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
       }).then(responce => responce.json())
         .then(data => data)
 
     } catch (error) {
-
       console.log(error)
-
     }
 
   }
@@ -171,6 +167,7 @@ const App = () => {
     try {
 
       const docRef = await addDoc(collection(db, "cards"), {
+        title: card.title,
         name: card.name,
         phone: card.phone,
         tgId: card.tgId,
@@ -208,6 +205,7 @@ const App = () => {
         createFirestoreDoc()
         setCard({
           id: id,
+          title: '',
           name: '',
           phone: '',
           tgId: '',
@@ -248,6 +246,7 @@ const App = () => {
 
       setCard({
         id: id,
+        title: '',
         name: '',
         phone: '',
         tgId: '',
@@ -268,9 +267,6 @@ const App = () => {
   }
 
 
-
-
-
   // sendToTelegram
 
 
@@ -288,7 +284,6 @@ const App = () => {
         },
         body: JSON.stringify({chat_id: CHAT_ID, parse_mode: 'html', text: message(card)})
       })
-
       const data = await responce.json()
 
     } catch (error) {
