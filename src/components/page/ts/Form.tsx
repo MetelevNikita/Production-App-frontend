@@ -39,7 +39,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
       <Col md={12} className='d-flex flex-column '>
 
-        <MyInput place='название проекта' type='text' title='Название проекта' subtitle='Введите название которым в дальнейшим будет именоваться ваш продукт' value={card.title} onChange={(e) => {setCard({...card, title: e.target.value})}}></MyInput>
+        <MyInput place='полное название проекта' type='text' title='Название проекта' subtitle='Введите название которым в дальнейшим будет именоваться ваш продукт' value={card.title} onChange={(e) => {setCard({...card, title: e.target.value})}}></MyInput>
 
         <MyInput place='фио' type='text' title='Заказчик' subtitle='ФИО, название отдела' value={card.name} onChange={(e) => {setCard({...card, name: e.target.value})}}></MyInput>
 
