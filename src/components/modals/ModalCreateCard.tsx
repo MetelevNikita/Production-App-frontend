@@ -42,6 +42,12 @@ const ModalCreateCard: FC<Modal> = ({ modal }) => {
   }
 
 
+  const closeModalCard = () => {
+    setModalCreate(false)
+    window.location.reload()
+  }
+
+
 
   return (
 
@@ -49,7 +55,7 @@ const ModalCreateCard: FC<Modal> = ({ modal }) => {
       <Col className='modal-page-container d-flex flex-column justify-content-center align-items-center'>
 
 
-              <button className='modal-close-icon' onClick={() => {setModalCreate(false)}}><img src={modalClose} alt="modal-close" /></button>
+              <button className='modal-close-icon' onClick={() => {closeModalCard()}}><img src={modalClose} alt="modal-close" /></button>
 
 
               <Col className='mt-3'><img className='modal-icon-top' src={modalOk} alt="modal-icon-ok" /></Col>

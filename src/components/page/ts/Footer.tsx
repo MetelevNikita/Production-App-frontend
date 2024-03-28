@@ -28,6 +28,8 @@ const Footer = () => {
 
       </Col>
 
+      <Col md={5} style={{textAlign: 'center', marginTop: '10px', color: 'white', fontSize: '12px'}}>V 2.0</Col>
+
 
       <Col className='mt-3'><div className='footer-title'>Производство РА "Центр творчества" &#169; Все права защищины</div></Col>
       <Col className='mt-2 mb-4'><div className='footer-subtitle'>Техническая поддержака: 8-989-951-9063</div></Col>

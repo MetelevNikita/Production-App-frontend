@@ -1,7 +1,7 @@
 
 export type CardType = {
 
-  id: string,
+  id: string | number,
   title: string
   name: string,
   phone: string

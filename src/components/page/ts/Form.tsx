@@ -35,6 +35,14 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
   const {card, setCard} = cards
 
 
+
+
+
+  const submitCard = (): void => {
+    createCard()
+  }
+
+
   return (
 
       <Col md={12} className='d-flex flex-column '>
@@ -100,7 +108,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
         </Row>
 
         <Row className='mt-4 d-flex justify-content-center'>
-          <Col className='mb-3' md={4} sm={12} xs={12}><MyButton title='Отправить' onClick={() => {createCard()}}></MyButton></Col>
+          <Col className='mb-3' md={4} sm={12} xs={12}><MyButton title='Отправить' onClick={() => {submitCard()}}></MyButton></Col>
           <Col className='mb-3' md={4} sm={12} xs={12}><MyButton title='Очистить форму' onClick={() => {clearCard()}}></MyButton></Col>
 
         </Row>

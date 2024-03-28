@@ -27,7 +27,7 @@ import { CardType } from './types/type';
 
 import { app } from './app/firebaseApp';
 import { getFirestore } from "firebase/firestore";
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, getDocs, setDoc, doc, getDoc } from 'firebase/firestore';
 
 // server
 
@@ -39,7 +39,12 @@ import { typeWork } from './components/server/server';
 
 const App = () => {
 
-  const id = uuidv4().split('').slice(0, 8).join('')
+  useEffect(() => {getFirestoreDoc()}, [])
+
+
+
+  const [cardId, setCardId] = useState([])
+  const id = cardId.length + 1
   const [card, setCard] = useState<CardType>({
     id: id,
     title: '',
@@ -61,6 +66,7 @@ const App = () => {
     deadline: ''
   })
 
+
   const [modalCreate, setModalCreate] = useState<boolean>(false)
   const [modalAlert, setModalAlert] = useState<boolean>(false)
 
@@ -69,7 +75,7 @@ const App = () => {
 
 
   const message = (card : any) => {
-    return `№${card.id}\n\nНазвание проекта\n\n${card.title}\n\nИмя\n\n${card.name}\n\nТелефон\n\n${card.phone}\n\nTelegramID\n\n${card.tgId}\n\nТип продукта\n\n${card.typeProduct.label}\n\nДругое\n\n${card.otherProduct}\n\nСопутствующие продукты для фильма\n\n${card.promotion}\n\nТип Работ\n\n${card.typeWork.label}\n\nДля какой большой цели нужен продукт?\n\n${card.target}\n\nКто является конечным зрителем и география его проживания?\n\n${card.viewer}\n\nКакой эффект должен произвести продукт на зрителя?\n\n${card.effect}\n\nОпишите содержание ролика\n\n${card.description}\n\nЗакадровый текст\n\n${card.voiceover}\n\nХронометраж\n\n${card.timing}\n\nПлощадки для размещения\n\n${card.place}\n\nТехническая спецификация\n\n${card.technicalSpecification}\n\n \n\n Дата выхода\n\n${card.deadline}`
+    return `№${id}\n\nНазвание проекта\n\n${card.title}\n\nИмя\n\n${card.name}\n\nТелефон\n\n${card.phone}\n\nTelegramID\n\n${card.tgId}\n\nТип продукта\n\n${card.typeProduct.label}\n\nДругое\n\n${card.otherProduct}\n\nСопутствующие продукты для фильма\n\n${card.promotion}\n\nТип Работ\n\n${card.typeWork.label}\n\nДля какой большой цели нужен продукт?\n\n${card.target}\n\nКто является конечным зрителем и география его проживания?\n\n${card.viewer}\n\nКакой эффект должен произвести продукт на зрителя?\n\n${card.effect}\n\nОпишите содержание ролика\n\n${card.description}\n\nЗакадровый текст\n\n${card.voiceover}\n\nХронометраж\n\n${card.timing}\n\nПлощадки для размещения\n\n${card.place}\n\nТехническая спецификация\n\n${card.technicalSpecification}\n\n \n\n Дата выхода\n\n${card.deadline}`
   }
 
 
@@ -77,83 +83,92 @@ const App = () => {
 
   // Yougile
 
-  useEffect(() => {
-    getApiKeyYougile()
-    getAllCard()
-  }, [])
+  // useEffect(() => {
+  //   getApiKeyYougile()
+  //   getAllCard()
+  // }, [])
 
 
   const url = 'https://ru.yougile.com/api-v2/'
 
 
   const getApiKeyYougile = async () => {
-    const responce = await fetch(`${url}auth/companies`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ login: 'Kyle.B@mail.ru', password: 'Metelev1989' })
-    });
-    const data = await responce.json();
-    const companyPROD_ID = data.content[3].id;
-    const responce_1 = await fetch(`${url}auth/keys/get`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ login: 'Kyle.B@mail.ru', password: 'Metelev1989', companyId: companyPROD_ID })
-    });
-    const data_1 = await responce_1.json();
-    localStorage.setItem('ProdKey', data_1[2].key);
-    return await fetch(`${url}columns`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${data_1[2].key}`
-      }
-    }).then(responce_2 => responce_2.json())
-      .then((data_2 => {
-        localStorage.setItem('ProdBoard', data_2.content[0].id);
-      })).catch(err => console.log(err));
+  const responce = await fetch(`${url}auth/companies`, {
+  method: 'POST',
+  headers: {
+  'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ login: 'Kyle.B@mail.ru', password: 'Metelev1989' })
+  });
+  const data = await responce.json();
+  const companyPROD_ID = data.content[3].id;
+  const responce_1 = await fetch(`${url}auth/keys/get`, {
+  method: 'POST',
+  headers: {
+  'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ login: 'Kyle.B@mail.ru', password: 'Metelev1989', companyId: companyPROD_ID })
+  });
+  const data_1 = await responce_1.json();
+  localStorage.setItem('ProdKey', data_1[2].key);
+  return await fetch(`${url}columns`, {
+  method: 'GET',
+  headers: {
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${data_1[2].key}`
   }
-
+  }).then(responce_2 => responce_2.json())
+  .then((data_2 => {
+  localStorage.setItem('ProdBoard', data_2.content[0].id);
+  })).catch(err => console.log(err));
+  }
 
   const getAllCard = async () => {
-    const prodKey = localStorage.getItem('ProdKey')
-    const prodBoard = localStorage.getItem('ProdBoard')
+  const prodKey = localStorage.getItem('ProdKey')
+  const prodBoard = localStorage.getItem('ProdBoard')
 
-    return await fetch(`${url}columns`, {
-      method:'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${prodKey}`
-      }
-
-    }).then(responce => responce.json())
-      .then(data => data)
-      .catch(err => console.log(err));
+  return await fetch(`${url}columns`, {
+  method:'GET',
+  headers: {
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${prodKey}`
   }
 
+  }).then(responce => responce.json())
+  .then(async data => {
+  const columnId =  data.content[0].id
+  const responce = await fetch(`${url}tasks`, {
+  method: 'GET',
+  headers: {
+    'Content-Type': 'application/json',
+    'Authorization': `Bearer ${prodKey}`
+  }
+  });
+  const data_1 = await responce.json();
+  return data_1
+  })
+  .catch(err => console.log(err));
+  }
 
   const createYGCard = async () => {
-    const prodKey = localStorage.getItem('ProdKey')
-    const prodBoard = localStorage.getItem('ProdBoard')
+  const prodKey = localStorage.getItem('ProdKey')
+  const prodBoard = localStorage.getItem('ProdBoard')
 
-    try {
+  try {
 
-      return await fetch(`${url}tasks`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${prodKey}`
-        },
-        body: JSON.stringify({title: `№${card.id} - Название ${card.title}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
-      }).then(responce => responce.json())
-        .then(data => data)
+  return await fetch(`${url}tasks`, {
+  method: 'POST',
+  headers: {
+  'Content-Type': 'application/json',
+  'Authorization': `Bearer ${prodKey}`
+  },
+  body: JSON.stringify({title: `№${id} - Название ${card.title}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
+  }).then(responce => responce.json())
+  .then(data => data)
 
-    } catch (error) {
-      console.log(error)
-    }
+  } catch (error) {
+  console.log(error)
+  }
 
   }
 
@@ -166,7 +181,8 @@ const App = () => {
     const db = getFirestore(app);
     try {
 
-      const docRef = await addDoc(collection(db, "cards"), {
+      const docRef = await setDoc(doc(db, "cards", JSON.stringify(id)), {
+        id: id,
         title: card.title,
         name: card.name,
         phone: card.phone,
@@ -185,12 +201,30 @@ const App = () => {
         deadline: card.deadline
       })
 
-      console.log(`Document is Create ${docRef.id}` )
+      console.log(`Document is Create ${id}` )
 
     } catch (error) {
-      console.log(error)
+      console.error(error, 'Ошибка создания данных с Firestore')
     }
   }
+
+
+  const getFirestoreDoc = async () => {
+    const db = getFirestore(app);
+    try {
+      const querySnapshot : any = await getDocs(collection(db, "cards"));
+      const data = querySnapshot.docs.map((doc: any) => doc.data());
+      setCardId(data)
+
+    } catch (error) {
+      console.error(error, 'Ошибка получения данных с Firestore')
+    }
+  }
+
+
+
+
+
 
   // Create new Card
 
@@ -229,11 +263,8 @@ const App = () => {
         setModalAlert(true)
       }
 
-
     } catch (error) {
-
-      console.log(error)
-
+      console.log(error, 'Ошибка отправки сообщения')
     }
 
 
@@ -244,7 +275,7 @@ const App = () => {
 
   const clearSelectCard = () => {
 
-      setCard({
+    return setCard({
         id: id,
         title: '',
         name: '',
@@ -270,7 +301,7 @@ const App = () => {
   // sendToTelegram
 
 
-  const SendToTelegram = async () => {
+  const SendToTelegram = async () : Promise<any> => {
     const TOKEN = '6561343238:AAHQWfNwKLmEu-hlH_y6M00MUB_XyZqTzk8'
     const CHAT_ID = '-4171897222'
     const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
@@ -296,7 +327,10 @@ const App = () => {
 
 
 
-//
+
+
+
+  //
 
 
 
