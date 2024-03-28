@@ -119,13 +119,15 @@ const App = () => {
   }
   }).then(responce_2 => responce_2.json())
   .then((data_2 => {
-  localStorage.setItem('ProdBoard', data_2.content[0].id);
+    console.log(data_2)
+  localStorage.setItem('ProdBoard', data_2.content[6].id);
   })).catch(err => console.log(err));
   }
 
   const getAllCard = async () => {
   const prodKey = localStorage.getItem('ProdKey')
   const prodBoard = localStorage.getItem('ProdBoard')
+  console.log(prodBoard)
 
   return await fetch(`${url}columns`, {
   method:'GET',
@@ -136,7 +138,8 @@ const App = () => {
 
   }).then(responce => responce.json())
   .then(async data => {
-  const columnId =  data.content[0].id
+    console.log(data)
+  const columnId =  data.content[6].id
   const responce = await fetch(`${url}tasks`, {
   method: 'GET',
   headers: {
@@ -145,6 +148,7 @@ const App = () => {
   }
   });
   const data_1 = await responce.json();
+  console.log(data_1)
   return data_1
   })
   .catch(err => console.log(err));
