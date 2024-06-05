@@ -66,6 +66,7 @@ const ModalCreateCard: FC<Modal> = ({ modal }) => {
               <Row className='d-flex flex-column'>
                 <Col className='mb-2'><MyButtonModal title='Елизавета' img={modalTG} imgAlt='modal-phone' onClick={() => {sendMessageToTg('elizabethspoon')}}></MyButtonModal></Col>
                 <Col className='mb-4'><MyButtonModal title='Екатерина' img={modalTG} imgAlt='modal-phone' onClick={() => {sendMessageToTg('katerinaboynova')}}></MyButtonModal></Col>
+                <Col className='mb-4'><MyButtonModal title='Валерия' img={modalTG} imgAlt='modal-phone' onClick={() => {sendMessageToTg('#@lerahladno')}}></MyButtonModal></Col>
               </Row>
 
 

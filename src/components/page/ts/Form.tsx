@@ -32,24 +32,24 @@ interface Form {
 
 const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
+
+
+
   const {card, setCard} = cards
 
-
-
-
-
-
   return (
+
+
 
       <Col md={12} className='d-flex flex-column '>
 
         <MyInput place='полное название проекта' type='text' title='Название проекта' subtitle='Введите название которым в дальнейшим будет именоваться ваш продукт' value={card.title} onChange={(e) => {setCard({...card, title: e.target.value})}}></MyInput>
 
-        <MyInput place='фио' type='text' title='Заказчик' subtitle='ФИО, название отдела' value={card.name} onChange={(e) => {setCard({...card, name: e.target.value})}}></MyInput>
+        <MyInput place='фио' type='text' title='Заказчик' subtitle='ФИО' value={card.name} onChange={(e) => {setCard({...card, name: e.target.value})}}></MyInput>
 
         <MyInput place='контактный телефон' type='number' title='Контактный телефон' value={card.phone} onChange={(e) => {setCard({...card, phone: e.target.value})}}></MyInput>
 
-        <MyInput place='telegram id' type='number' title='Telegram ID' subtitle='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н. ВНИМАНИЕ!!! telegram id можно посмотреть в профиле corp сайта' value={card.tgId} onChange={(e) => {setCard({...card, tgId: e.target.value})}}></MyInput>
+        <MyInput place='telegram id' type='number' title='Telegram ID' subtitle= 'Ваш telegram id вы можете посмотреть на корпоративном сайте или с помощью бота -' link='https://t.me/getmyid_bot' linkTitle='@getmyid_bot' annotation='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н.' value={card.tgId} onChange={(e)  =>  {setCard({...card, tgId: e.target.value})}}></MyInput>
 
         {/* select */}
 

@@ -83,10 +83,10 @@ const App = () => {
 
   // Yougile
 
-  useEffect(() => {
-    getApiKeyYougile()
-    getAllCard()
-  }, [])
+  // useEffect(() => {
+  //   getApiKeyYougile()
+  //   getAllCard()
+  // }, [])
 
 
   const url = 'https://ru.yougile.com/api-v2/'
