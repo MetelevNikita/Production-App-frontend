@@ -74,8 +74,13 @@ const App = () => {
   const timestamp = newDate.getTime()
 
 
-  const message = (card : any) => {
-    return `№${id}\n\nНазвание проекта\n\n${card.title}\n\nИмя\n\n${card.name}\n\nТелефон\n\n${card.phone}\n\nTelegramID\n\n${card.tgId}\n\nТип продукта\n\n${card.typeProduct.label}\n\nДругое\n\n${card.otherProduct}\n\nСопутствующие продукты для фильма\n\n${card.promotion}\n\nТип Работ\n\n${card.typeWork.label}\n\nДля какой большой цели нужен продукт?\n\n${card.target}\n\nКто является конечным зрителем и география его проживания?\n\n${card.viewer}\n\nКакой эффект должен произвести продукт на зрителя?\n\n${card.effect}\n\nОпишите содержание ролика\n\n${card.description}\n\nЗакадровый текст\n\n${card.voiceover}\n\nХронометраж\n\n${card.timing}\n\nПлощадки для размещения\n\n${card.place}\n\nТехническая спецификация\n\n${card.technicalSpecification}\n\n \n\n Дата выхода\n\n${card.deadline}`
+  const messageTG = (card : any) => {
+    return `№${id}\n\nНазвание проекта\n\n${card.title}\n\nИмя\n\n${card.name}\n\nТелефон\n\n${card.phone}\n\nTelegramID\n\n${card.tgId}\n\nТип продукта\n\n${card.typeProduct.label}\n\nДругое\n\n${card.otherProduct}\n\nСопутствующие продукты для фильма\n\n${card.promotion}\n\nТип Работ\n\n${card.typeWork.label}\n\nДля какой большой цели нужен продукт?\n\n${card.target}\n\nКто является конечным зрителем и география его проживания?\n\n${card.viewer}\n\nКакой эффект должен произвести продукт на зрителя?\n\n${card.effect}\n\nОпишите содержание ролика\n\n${card.description}\n\nЗакадровый текст\n\n${card.voiceover}\n\nХронометраж\n\n${card.timing}\n\nПлощадки для размещения\n\n${card.place}\n\nТехническая спецификация\n\n${card.technicalSpecification}\n\n \n\nДата выхода\n\n${card.deadline}`
+  }
+
+
+  const messageYG = (card : any) => {
+    return `№${id}<br><br>Название проекта<br>${card.title}<br><br>Имя<br>${card.name}<br><br>Телефон<br>${card.phone}<br><br>TelegramID<br>${card.tgId}<br><br>Тип продукта<br>${card.typeProduct.label}<br><br>Другое<br>${card.otherProduct}<br><br>Сопутствующие продукты для фильма<br>${card.promotion}<br><br>Тип Работ<br>${card.typeWork.label}<br><br>Для какой большой цели ужен продукт?<br>${card.target}<br><br>Кто является конечным зрителем и география его проживания?<br>${card.viewer}<br><br>Какой эффект должен произвести продукт на зрителя?<br>${card.effect}<br><br>Опишите содержание ролика<br>${card.description}\Закадровый текст<br>${card.voiceover}<br><br>Хронометраж<br>${card.timing}<br><br>Площадки для размещения<br>${card.place}<br><br>Техническая спецификация<br>${card.technicalSpecification}<br><br><br>Дата выхода\n\n${card.deadline}`
   }
 
 
@@ -138,7 +143,7 @@ const App = () => {
 
   }).then(responce => responce.json())
   .then(async data => {
-    console.log(data)
+
   const columnId =  data.content[6].id
   const responce = await fetch(`${url}tasks`, {
   method: 'GET',
@@ -166,7 +171,7 @@ const App = () => {
   'Content-Type': 'application/json',
   'Authorization': `Bearer ${prodKey}`
   },
-  body: JSON.stringify({title: `№${id} - Название ${card.title}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
+  body: JSON.stringify({title: `№${id} - Название ${card.title}`, columnId: prodBoard, description: messageYG(card), deadline: {deadline: timestamp}})
   }).then(responce => responce.json())
   .then(data => data)
 
@@ -317,7 +322,7 @@ const App = () => {
         headers: {
           'Content-Type':'application/json'
         },
-        body: JSON.stringify({chat_id: CHAT_ID, parse_mode: 'html', text: message(card)})
+        body: JSON.stringify({chat_id: CHAT_ID, parse_mode: 'html', text: messageTG(card)})
       })
       const data = await responce.json()
 
