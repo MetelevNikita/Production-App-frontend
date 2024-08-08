@@ -34,7 +34,7 @@ import { typeWork } from './components/server/server';
 const App = () => {
 
 
-  const tgId = ['130127579', '225091566', '85252645', '-4171897222', '225091566']
+  const tgId = ['130127579', '225091566', '85252645', '225091566']
 
 
   const [cardId, setCardId] = useState([])
@@ -261,7 +261,6 @@ const App = () => {
 
 
 
-
   const createNewCard = () => {
 
     try {
@@ -276,6 +275,8 @@ const App = () => {
           tgId.forEach((item) => {
             sendToTelegram(item)
           })
+
+          sendMessageToTgGroup()
 
           setCard({
             id: id,
@@ -347,9 +348,6 @@ const App = () => {
 
 
     const cardYGId = localStorage.getItem('card_id')
-    console.log(cardYGId)
-
-    console.log(card.typeproduct)
 
     const cardTG = {
       id: id,
@@ -392,6 +390,57 @@ const App = () => {
 
     } catch (error) {
       console.log(`Сообщение не отправлено боту. Код ошибки ${error}`)
+    }
+  }
+
+
+
+
+  const sendMessageToTgGroup = async () => {
+    try {
+
+      const cardYGId = localStorage.getItem('card_id')
+      const cardTG = {
+        id: id,
+        cardid: JSON.stringify(cardYGId),
+        title: card.title,
+        name: card.name,
+        phone: card.phone,
+        tgid: card.tgid,
+        typeproduct: card.typeproduct,
+        otherproduct: card.otherproduct,
+        promotion: card.promotion,
+        typework: card.typework,
+        target: card.target,
+        viewer: card.viewer,
+        effect: card.effect,
+        description: card.description,
+        voiceover: card.voiceover,
+        timing: card.timing,
+        place: card.place,
+        technicalspecification: card.technicalspecification,
+        deadline: card.deadline,
+
+      }
+
+      const CHAT_ID = '-4171897222'
+      const TOKEN = '6937785290:AAECcxUKtiOc0gU-R-y7GGZ71nI6MrWTXb8'
+      const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
+
+
+      const responce = await fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({chat_id: CHAT_ID, parse_mode: 'html', text: message(cardTG)})
+      })
+      const data = await responce.json()
+      return data
+
+
+    } catch (error) {
+      console.log(`Сообщение не отправлено ботом в группу. Код ошибки ${error}`)
     }
   }
 
