@@ -198,7 +198,7 @@ const App = () => {
 
     try {
 
-      const responce = await fetch('http://localhost:9000/api/v1/message', {
+      const responce = await fetch('https://www.utvprod.tw1.ru/api/v1/message', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -375,7 +375,7 @@ const App = () => {
     }
 
 
-    const TOKEN = '6625147648:AAGplWAtU_ZEj76s9tIQKTOJD53NPgfKgzw'
+    const TOKEN = '6937785290:AAECcxUKtiOc0gU-R-y7GGZ71nI6MrWTXb8'
     const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
 
     try {
