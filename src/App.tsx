@@ -34,7 +34,7 @@ import { typeWork } from './components/server/server';
 const App = () => {
 
 
-  const tgId = ['225091566', '85252645', '-4171897222']
+  const tgId = ['130127579', '225091566', '85252645', '-4171897222', '225091566']
 
 
   const [cardId, setCardId] = useState([])
