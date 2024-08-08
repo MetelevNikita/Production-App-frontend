@@ -241,7 +241,7 @@ const App = () => {
 
   const getAllCardServer = async () => {
     try {
-      const responce = await fetch('http://localhost:9000/api/v1/message', {
+      const responce = await fetch('https://www.utvprod.tw1.ru/api/v1/message', {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json'
