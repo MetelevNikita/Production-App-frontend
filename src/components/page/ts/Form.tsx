@@ -23,6 +23,8 @@ import { typeProduct } from '../../server/server'
 import { typeWork } from '../../server/server'
 
 
+
+
 interface Form {
   cards: any
   createCard: () => any
@@ -32,14 +34,10 @@ interface Form {
 
 const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
-
-
-
   const {card, setCard} = cards
 
+
   return (
-
-
 
       <Col md={12} className='d-flex flex-column '>
 
@@ -53,7 +51,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
         {/* select */}
 
-        <MySelect title='Тип продукта' option={typeProduct} onChange={(e) => setCard({...card, typeproduct: e})} defaultValue={typeProduct[0]}></MySelect>
+        <MySelect title='Тип продукта' option={typeProduct} onChange={(e) => setCard({...card, typeproduct: e})} placeholder={'Выберите тип продукта'}></MySelect>
 
         {(card.typeproduct.value === 'other') ? <MyInput place='введите текст' type='text' title='другой тип продукта' value={card.otherproduct} onChange={(e) => {setCard({...card, otherproduct: e.target.value})}}></MyInput> : <></>}
 
@@ -66,7 +64,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
         {/* select */}
 
 
-        <MySelect title='Тип работ' option={typeWork} onChange={(e) => setCard({...card, typework: e})} defaultValue={typeWork[0]}></MySelect>
+        <MySelect title='Тип работ' option={typeWork} onChange={(e) => setCard({...card, typework: e})} placeholder={'Выберите тип работ'}></MySelect>
 
 
         {/*  */}

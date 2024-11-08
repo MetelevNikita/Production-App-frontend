@@ -16,7 +16,7 @@ import socThree from './../../../asset/social/soc-three.svg'
 
 //
 
-const Footer = () => {
+const Footer: FC = () => {
   return (
 
     <Row className='d-flex flex-column align-items-center justify-content-start mt-4'>
