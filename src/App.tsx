@@ -151,7 +151,25 @@ const App = () => {
       })
 
       const data = await responce.json()
+      console.log(data)
       localStorage.setItem('card_id', data.id)
+
+      if(data.id !== null) {
+        createNewCardServer(data.id)
+
+        tgId.forEach((item) => {
+          sendToTelegram(item, data.id)
+        })
+
+        sendMessageToTgGroup(data.id)
+
+      } else {
+        alert('Ошибка создания карточки в YouGile, попробуйте еще раз')
+        console.error('Ошибка создания карточки в YouGile')
+        return
+      }
+
+
 
       } catch (error) {
       console.log(`Ошибка создания карточки в YouGile ${error}`)
@@ -163,10 +181,7 @@ const App = () => {
   // create card to server
 
 
-  const createNewCardServer = async () => {
-
-    const cardYGId = localStorage.getItem('card_id')
-
+  const createNewCardServer = async (card_id: string) => {
     try {
 
       const responce = await fetch('https://www.utvprod.tw1.ru/api/v1/message', {
@@ -176,7 +191,7 @@ const App = () => {
         },
         body: JSON.stringify({
           id: id,
-          cardid: cardYGId,
+          cardid: card_id,
           title: card.title,
           name: card.name,
           phone: card.phone,
@@ -196,11 +211,8 @@ const App = () => {
           deadline: card.deadline,
         })
       })
-
-
         const data = await responce.json()
         return data
-
 
     } catch (error) {
       console.log(`Что то пошло не так при отправке на сервер. Код ошибки ${error}`)
@@ -240,13 +252,6 @@ const App = () => {
         createYGCard(ygKey)
 
         setTimeout(() => {
-          createNewCardServer()
-
-          tgId.forEach((item) => {
-            sendToTelegram(item)
-          })
-
-          sendMessageToTgGroup()
 
           setCard({
             id: id,
@@ -314,14 +319,14 @@ const App = () => {
   // sendToTelegram
 
 
-  const sendToTelegram = async (CHAT_ID: string) : Promise<any> => {
+  const sendToTelegram = async (CHAT_ID: string, cardId: any) : Promise<any> => {
 
 
     const cardYGId = localStorage.getItem('card_id')
 
     const cardTG = {
       id: id,
-      cardid: JSON.stringify(cardYGId),
+      cardid: JSON.stringify(cardId),
       title: card.title,
       name: card.name,
       phone: card.phone,
@@ -366,13 +371,13 @@ const App = () => {
 
 
 
-  const sendMessageToTgGroup = async () => {
+  const sendMessageToTgGroup = async (cardId: any) => {
     try {
 
       const cardYGId = localStorage.getItem('card_id')
       const cardTG = {
         id: id,
-        cardid: JSON.stringify(cardYGId),
+        cardid: JSON.stringify(cardId),
         title: card.title,
         name: card.name,
         phone: card.phone,
