@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //
 
 import { useState, useEffect } from 'react'
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
 
 // utill
 
@@ -415,7 +415,7 @@ const App = () => {
 
 
     } catch (error) {
-      console.log(`Сообщение не отправлено ботом в группу. Код ошибки ${error}`)
+      console.log(`Сообщение не отправлено ботом в группу попробуйте позже. Код ошибки ${error}`)
     }
   }
 
