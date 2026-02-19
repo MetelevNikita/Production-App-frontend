@@ -79,12 +79,18 @@ const App = () => {
   }
 
 
+  const getYouGileData = async () => {
+        await getApiKeyYougile()
+        await getAllCard()
+  } 
+
 
   // Yougile
 
   useEffect(() => {
-    getApiKeyYougile()
-    getAllCard()
+
+    getYouGileData()
+
   }, [])
 
 
@@ -92,6 +98,7 @@ const App = () => {
 
 
   const getApiKeyYougile = async () => {
+    
   const responce = await fetch(`${url}auth/companies`, {
   method: 'POST',
   headers: {
@@ -157,21 +164,21 @@ const App = () => {
   const prodKey = localStorage.getItem('ProdKey')
   const prodBoard = localStorage.getItem('ProdBoard')
 
-  try {
+      try {
 
-  return await fetch(`${url}tasks`, {
-  method: 'POST',
-  headers: {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${prodKey}`
-  },
-  body: JSON.stringify({title: `№${id} - Название ${card.title}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
-  }).then(responce => responce.json())
-  .then(data => data)
+        return await fetch(`${url}tasks`, {
+        method: 'POST',
+        headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${prodKey}`
+        },
+        body: JSON.stringify({title: `№${id} - Название ${card.title}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
+        }).then(responce => responce.json())
+        .then(data => data)
 
-  } catch (error) {
-  console.log(error)
-  }
+      } catch (error) {
+        console.log(error)
+      }
 
   }
 
@@ -231,15 +238,15 @@ const App = () => {
 
   // Create new Card
 
-  const createNewCard = () => {
+  const createNewCard = async () => {
 
     try {
 
       if(card.name !== '', card.phone !== '',  card.tgId !== '', card.promotion !== '', card.target !== '', card.viewer !== '', card.effect !== '', card.description !== '', card.voiceover !== '', card.timing !== '', card.place !== '', card.technicalSpecification !== '', card.deadline !== '') {
 
-        createYGCard()
-        SendToTelegram()
-        createFirestoreDoc()
+        await createYGCard()
+        await SendToTelegram()
+        await createFirestoreDoc()
         setCard({
           id: id,
           title: '',
