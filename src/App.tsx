@@ -399,7 +399,7 @@ const App = () => {
       }
 
       const CHAT_ID = '-4171897222'
-      const TOKEN = '6561343238:AAHQWfNwKLmEu-hlH_y6M00MUB_XyZqTzk8'
+      const TOKEN = '6561343238:AAH2kJ_QiwrLmLTwcKlUujv-fyxkTuvHNF4'
       const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
 
 
