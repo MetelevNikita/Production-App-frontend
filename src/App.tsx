@@ -348,7 +348,7 @@ const App = () => {
     }
 
 
-    const TOKEN = '6937785290:AAECcxUKtiOc0gU-R-y7GGZ71nI6MrWTXb8'
+    const TOKEN = '6561343238:AAH2kJ_QiwrLmLTwcKlUujv-fyxkTuvHNF4'
     const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
 
     try {
@@ -418,9 +418,6 @@ const App = () => {
       console.log(`Сообщение не отправлено ботом в группу попробуйте позже. Код ошибки ${error}`)
     }
   }
-
-
-
 
   //
 
