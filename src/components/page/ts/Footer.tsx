@@ -16,7 +16,7 @@ import socThree from './../../../asset/social/soc-three.svg'
 
 //
 
-const Footer = () => {
+const Footer: FC = () => {
   return (
 
     <Row className='d-flex flex-column align-items-center justify-content-start mt-4'>
@@ -28,7 +28,7 @@ const Footer = () => {
 
       </Col>
 
-      <Col md={5} style={{textAlign: 'center', marginTop: '10px', color: 'white', fontSize: '12px'}}>V 2.0</Col>
+      <Col md={5} style={{textAlign: 'center', marginTop: '10px', color: 'white', fontSize: '12px'}}>V 3.5</Col>
 
 
       <Col className='mt-3'><div className='footer-title'>Производство РА "Центр творчества" &#169; Все права защищины</div></Col>

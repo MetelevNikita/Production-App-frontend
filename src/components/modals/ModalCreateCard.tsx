@@ -12,7 +12,6 @@ import { Row, Col } from 'react-bootstrap'
 
 
 import modalOk from './../../asset/modals/modal-icon-ok.svg'
-import modalPhone from './../../asset/modals/modal-icon-phone.svg'
 import modalTG from './../../asset/modals/modal-icon-tg.svg'
 import modalClose from './../../asset/modals/modal-icon-close.svg'
 
@@ -33,7 +32,7 @@ interface Modal {
 
 const ModalCreateCard: FC<Modal> = ({ modal }) => {
 
-  const {modalCreate, setModalCreate} = modal
+  const { setModalCreate } = modal
 
 
   const sendMessageToTg = (id : string) => {

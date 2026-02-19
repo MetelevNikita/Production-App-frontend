@@ -23,6 +23,8 @@ import { typeProduct } from '../../server/server'
 import { typeWork } from '../../server/server'
 
 
+
+
 interface Form {
   cards: any
   createCard: () => any
@@ -32,14 +34,10 @@ interface Form {
 
 const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
-
-
-
   const {card, setCard} = cards
 
+
   return (
-
-
 
       <Col md={12} className='d-flex flex-column '>
 
@@ -49,13 +47,13 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
         <MyInput place='контактный телефон' type='number' title='Контактный телефон' value={card.phone} onChange={(e) => {setCard({...card, phone: e.target.value})}}></MyInput>
 
-        <MyInput place='telegram id' type='number' title='Telegram ID' subtitle= 'Ваш telegram id вы можете посмотреть на корпоративном сайте или с помощью бота -' link='https://t.me/getmyid_bot' linkTitle='@getmyid_bot' annotation='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н.' value={card.tgId} onChange={(e)  =>  {setCard({...card, tgId: e.target.value})}}></MyInput>
+        <MyInput place='telegram id' type='number' title='Telegram ID' subtitle= 'Ваш telegram id вы можете посмотреть на корпоративном сайте или с помощью бота -' link='https://t.me/getmyid_bot' linkTitle='@getmyid_bot' annotation='Вам придет копия ТЗ и уведомление об итоге согласования от Эделевой О.Н.' value={card.tgid} onChange={(e)  =>  {setCard({...card, tgid: e.target.value})}}></MyInput>
 
         {/* select */}
 
-        <MySelect title='Тип продукта' option={typeProduct} onChange={(e) => setCard({...card, typeProduct: e})} defaultValue={typeProduct[0]}></MySelect>
+        <MySelect title='Тип продукта' option={typeProduct} onChange={(e) => setCard({...card, typeproduct: e})} placeholder={'Выберите тип продукта'}></MySelect>
 
-        {(card.typeProduct.value === 'other') ? <MyInput place='введите текст' type='text' title='другой тип продукта' value={card.otherProduct} onChange={(e) => {setCard({...card, otherProduct: e.target.value})}}></MyInput> : <></>}
+        {(card.typeproduct.value === 'other') ? <MyInput place='введите текст' type='text' title='другой тип продукта' value={card.otherproduct} onChange={(e) => {setCard({...card, otherproduct: e.target.value})}}></MyInput> : <></>}
 
 
         {/*  */}
@@ -66,7 +64,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
         {/* select */}
 
 
-        <MySelect title='Тип работ' option={typeWork} onChange={(e) => setCard({...card, typeWork: e})} defaultValue={typeWork[0]}></MySelect>
+        <MySelect title='Тип работ' option={typeWork} onChange={(e) => setCard({...card, typework: e})} placeholder={'Выберите тип работ'}></MySelect>
 
 
         {/*  */}
@@ -89,7 +87,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
         <MyInput place='введите текст' type='text' title='На каких площадках будет размещаться продукт?' subtitle='Трансляция ролика на UTV или др. телеканале/ в соцсетях/ на радио/ на ТЦ или билбордах/ на выставках или конференциях.' value={card.place} onChange={(e) => {setCard({...card, place: e.target.value})}}></MyInput>
 
-        <MyInput place='введите текст' type='text' title='Технические требования к съемке' subtitle='Планируемая длительность съемки, место, сколько людей будет в кадре.Заполняется при необходимости съемок' value={card.technicalSpecification} onChange={(e) => {setCard({...card, technicalSpecification: e.target.value})}}></MyInput>
+        <MyInput place='введите текст' type='text' title='Технические требования к съемке' subtitle='Планируемая длительность съемки, место, сколько людей будет в кадре.Заполняется при необходимости съемок' value={card.technicalspecification} onChange={(e) => {setCard({...card, technicalspecification: e.target.value})}}></MyInput>
 
         <MyInput place='введите дату' type='date' title='Желаемый срок сдачи заказа' subtitle='От 2 рабочих дней на производство с момента предоставления всех материалов и утверждения заказа' value={card.deadline} onChange={(e) => {setCard({...card, deadline: e.target.value})}}></MyInput>
 

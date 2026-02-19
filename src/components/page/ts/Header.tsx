@@ -17,7 +17,7 @@ import './../css/Header.css'
 
 import { Col, Row } from 'react-bootstrap'
 
-const Header = () => {
+const Header: FC = () => {
   return (
 
     <Row md={8} className='d-flex flex-column justify-content-center align-items-center mt-4 mb-4'>

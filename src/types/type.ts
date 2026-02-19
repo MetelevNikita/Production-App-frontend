@@ -2,14 +2,15 @@
 export type CardType = {
 
   id: string | number,
+  cardid: string | any,
   title: string
   name: string,
   phone: string
-  tgId: string,
-  typeProduct: {label: string, value: string},
-  otherProduct?: string
+  tgid: string,
+  typeproduct: {label: string, value: string} | string,
+  otherproduct?: string
   promotion: string,
-  typeWork: {label: string, value: string},
+  typework: {label: string, value: string} | string,
   target: string
   viewer: string,
   effect: string,
@@ -17,7 +18,7 @@ export type CardType = {
   voiceover: string
   timing: string
   place: string
-  technicalSpecification: string
+  technicalspecification: string
   deadline: string
 
 }

@@ -6,8 +6,7 @@ import './ModalAlarmCard.css'
 
 //
 
-import { Row, Col } from 'react-bootstrap'
-import { useState } from 'react'
+import { Col } from 'react-bootstrap'
 
 // img
 
@@ -29,7 +28,7 @@ interface ModalAlarm {
 
 const ModalAlarmCard: FC<ModalAlarm> = ({ alert }) => {
 
-  const {modalAlert, setModalAlert} = alert
+  const {setModalAlert} = alert
 
   return (
 

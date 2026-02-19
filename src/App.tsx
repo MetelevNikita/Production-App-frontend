@@ -4,8 +4,12 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 //
 
 import { useState, useEffect } from 'react'
-import { v4 as uuidv4 } from 'uuid';
 import { Container, Row, Col } from 'react-bootstrap';
+
+// utill
+
+import { getYouGileKey } from './util/getYouGileKey';
+
 
 // components
 
@@ -23,11 +27,6 @@ import ModalAlarmCard from './components/modals/ModalAlarmCard';
 
 import { CardType } from './types/type';
 
-// firestore
-
-import { app } from './app/firebaseApp';
-import { getFirestore } from "firebase/firestore";
-import { collection, addDoc, getDocs, setDoc, doc, getDoc } from 'firebase/firestore';
 
 // server
 
@@ -39,22 +38,24 @@ import { typeWork } from './components/server/server';
 
 const App = () => {
 
-  useEffect(() => {getFirestoreDoc()}, [])
 
+  const tgId = ['130127579', '225091566', '85252645', '225091566']
 
-
+  const [ygKey, setYgKey] = useState<string>('')
+  const [boardId, setBoardId] = useState<string>('')
   const [cardId, setCardId] = useState([])
   const id = cardId.length + 1
   const [card, setCard] = useState<CardType>({
     id: id,
+    cardid: '',
     title: '',
     name: '',
     phone: '',
-    tgId: '',
-    typeProduct: typeProduct[0],
-    otherProduct: '',
+    tgid: '',
+    typeproduct: typeProduct[0].label,
+    otherproduct: '',
     promotion: '',
-    typeWork: typeWork[0],
+    typework: typeWork[0].label,
     target: '',
     viewer: '',
     effect: '',
@@ -62,7 +63,7 @@ const App = () => {
     voiceover: '',
     timing: '',
     place:'',
-    technicalSpecification: '',
+    technicalspecification: '',
     deadline: ''
   })
 
@@ -73,208 +74,215 @@ const App = () => {
   const newDate = new Date(card.deadline)
   const timestamp = newDate.getTime()
 
+  const url = process.env.REACT_APP_YG_URL
+
 
   const message = (card : any) => {
-    return `№${id}\n\nНазвание проекта\n\n${card.title}\n\nИмя\n\n${card.name}\n\nТелефон\n\n${card.phone}\n\nTelegramID\n\n${card.tgId}\n\nТип продукта\n\n${card.typeProduct.label}\n\nДругое\n\n${card.otherProduct}\n\nСопутствующие продукты для фильма\n\n${card.promotion}\n\nТип Работ\n\n${card.typeWork.label}\n\nДля какой большой цели нужен продукт?\n\n${card.target}\n\nКто является конечным зрителем и география его проживания?\n\n${card.viewer}\n\nКакой эффект должен произвести продукт на зрителя?\n\n${card.effect}\n\nОпишите содержание ролика\n\n${card.description}\n\nЗакадровый текст\n\n${card.voiceover}\n\nХронометраж\n\n${card.timing}\n\nПлощадки для размещения\n\n${card.place}\n\nТехническая спецификация\n\n${card.technicalSpecification}\n\n \n\nДата выхода\n\n${card.deadline}`
+    return `№${id}\n\ncardId\n${card.cardid}\n\nНазвание проекта\n\n${card.title}\n\nИмя\n\n${card.name}\n\nТелефон\n\n${card.phone}\n\nTelegramID\n\n${card.tgid}\n\nТип продукта\n\n${(card.typeproduct === undefined) ? 'не определено' : JSON.stringify(card.typeproduct.label)}\n\nДругое\n\n${card.otherproduct}\n\nСопутствующие продукты для фильма\n\n${card.promotion}\n\nТип Работ\n\n${(card.typework === undefined) ? 'не определено' : JSON.stringify(card.typework.label)}\n\nДля какой большой цели нужен продукт?\n\n${card.target}\n\nКто является конечным зрителем и география его проживания?\n\n${card.viewer}\n\nКакой эффект должен произвести продукт на зрителя?\n\n${card.effect}\n\nОпишите содержание ролика\n\n${card.description}\n\nЗакадровый текст\n\n${card.voiceover}\n\nХронометраж\n\n${card.timing}\n\nПлощадки для размещения\n\n${card.place}\n\nТехническая спецификация\n\n${card.technicalspecification}\n\n \n\nДата выхода\n\n${card.deadline}`
   }
 
+  const messageYG = (card : any) => {
+    return `№${id}<br><br>Название проекта<br>${card.title}<br><br>Имя<br>${card.name}<br><br>Телефон<br>${card.phone}<br><br>TelegramID<br>${card.tgid}<br><br>Тип продукта<br>${(card.typeproduct === undefined) ? 'не определено' : JSON.stringify(card.typeproduct.label)}<br><br>Другое<br>${card.otherproduct}<br><br>Сопутствующие продукты для фильма<br>${card.promotion}<br><br>Тип Работ<br>${(card.typework === undefined) ? 'не определено' : JSON.stringify(card.typework.label)}<br><br>Для какой большой цели нужен продукт?<br>${card.target}<br><br>Кто является конечным зрителем и география его проживания?<br>${card.viewer}<br><br>Какой эффект должен произвести продукт на зрителя?<br>${card.effect}<br><br>Опишите содержание ролика<br>${card.description}<br><br>Закадровый текст<br>${card.voiceover}<br><br>Хронометраж<br>${card.timing}<br><br>Площадки для размещения<br>${card.place}<br><br>Техническая спецификация<br>${card.technicalspecification}<br><br><br>Дата выхода<br>${card.deadline}`
+  }
 
-  const getYouGileData = async () => {
-        await getApiKeyYougile()
-        await getAllCard()
-  } 
 
 
   // Yougile
 
   useEffect(() => {
+    const getKey = async () => {
+      const key = await getYouGileKey(url)
+      setYgKey(key)
 
-    getYouGileData()
+
+      getCurrentBoardID(key)
+
+    }
+
+    getKey()
+
+    // server
+
+    getAllCardServer()
 
   }, [])
 
 
-  const url = 'https://ru.yougile.com/api-v2/'
 
 
-  const getApiKeyYougile = async () => {
-    
-  const responce = await fetch(`${url}auth/companies`, {
-  method: 'POST',
-  headers: {
-  'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ login: 'Kyle.B@mail.ru', password: 'Metelev1989' })
-  });
-  const data = await responce.json();
-  const companyPROD_ID = data.content[3].id;
-  const responce_1 = await fetch(`${url}auth/keys/get`, {
-  method: 'POST',
-  headers: {
-  'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({ login: 'Kyle.B@mail.ru', password: 'Metelev1989', companyId: companyPROD_ID })
-  });
-  const data_1 = await responce_1.json();
-  localStorage.setItem('ProdKey', data_1[2].key);
-  return await fetch(`${url}columns`, {
-  method: 'GET',
-  headers: {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${data_1[2].key}`
-  }
-  }).then(responce_2 => responce_2.json())
-  .then((data_2 => {
-    console.log(data_2)
-  localStorage.setItem('ProdBoard', data_2.content[6].id);
-  })).catch(err => console.log(err));
-  }
 
-  const getAllCard = async () => {
-  const prodKey = localStorage.getItem('ProdKey')
-  const prodBoard = localStorage.getItem('ProdBoard')
-  console.log(prodBoard)
 
-  return await fetch(`${url}columns`, {
-  method:'GET',
-  headers: {
-  'Content-Type': 'application/json',
-  'Authorization': `Bearer ${prodKey}`
-  }
+  const getCurrentBoardID = async (key: string) => {
 
-  }).then(responce => responce.json())
-  .then(async data => {
+    try {
 
-  const columnId =  data.content[6].id
-  const responce = await fetch(`${url}tasks`, {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${prodKey}`
-  }
-  });
-  const data_1 = await responce.json();
-  console.log(data_1)
-  return data_1
-  })
-  .catch(err => console.log(err));
-  }
-
-  const createYGCard = async () => {
-  const prodKey = localStorage.getItem('ProdKey')
-  const prodBoard = localStorage.getItem('ProdBoard')
-
-      try {
-
-        return await fetch(`${url}tasks`, {
-        method: 'POST',
+      const responce = await fetch(`${url}columns`, {
+        method:'GET',
         headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${prodKey}`
-        },
-        body: JSON.stringify({title: `№${id} - Название ${card.title}`, columnId: prodBoard, description: message(card), deadline: {deadline: timestamp}})
-        }).then(responce => responce.json())
-        .then(data => data)
-
-      } catch (error) {
-        console.log(error)
-      }
-
-  }
-
-
-
-
-  // firebase
-
-  const createFirestoreDoc = async () => {
-    const db = getFirestore(app);
-    try {
-
-      const docRef = await setDoc(doc(db, "cards", JSON.stringify(id)), {
-        id: id,
-        title: card.title,
-        name: card.name,
-        phone: card.phone,
-        tgId: card.tgId,
-        typeProduct: card.typeProduct.label,
-        promotion: card.promotion,
-        typeWork: card.typeWork.label,
-        target: card.target,
-        viewer: card.viewer,
-        effect: card.effect,
-        description: card.description,
-        voiceover: card.voiceover,
-        timing: card.timing,
-        place: card.place,
-        technicalSpecification: card. technicalSpecification,
-        deadline: card.deadline
+        'Authorization': `Bearer ${key}`
+        }
       })
 
-      console.log(`Document is Create ${id}` )
+      const data = await responce.json()
+      const currentBoard = data.content.filter((item: {title: string, color: number, boardId: string, id: string}) => {
+        return item.title === 'Входящие'
+      })[0].id
+
+      setBoardId(currentBoard)
 
     } catch (error) {
-      console.error(error, 'Ошибка создания данных с Firestore')
+      console.log(`Ошибка получения корректной доски ${error}`)
     }
+
   }
 
+  const createYGCard = async (key: string) => {
 
-  const getFirestoreDoc = async () => {
-    const db = getFirestore(app);
-    try {
-      const querySnapshot : any = await getDocs(collection(db, "cards"));
-      const data = querySnapshot.docs.map((doc: any) => doc.data());
-      setCardId(data)
+  try {
 
-    } catch (error) {
-      console.error(error, 'Ошибка получения данных с Firestore')
-    }
-  }
+    const responce = await fetch(`${url}tasks`, {
+      method: 'POST',
+      headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${key}`
+      },
+      body: JSON.stringify({title: `№${id} - Название ${card.title}`, columnId: boardId, description: messageYG(card), deadline: {deadline: timestamp}})
+      })
 
+      const data = await responce.json()
+      console.log(data)
+      localStorage.setItem('card_id', data.id)
 
+      if(data.id !== null) {
+        createNewCardServer(data.id)
 
-
-
-
-  // Create new Card
-
-  const createNewCard = async () => {
-
-    try {
-
-      if(card.name !== '', card.phone !== '',  card.tgId !== '', card.promotion !== '', card.target !== '', card.viewer !== '', card.effect !== '', card.description !== '', card.voiceover !== '', card.timing !== '', card.place !== '', card.technicalSpecification !== '', card.deadline !== '') {
-
-        await createYGCard()
-        await SendToTelegram()
-        await createFirestoreDoc()
-        setCard({
-          id: id,
-          title: '',
-          name: '',
-          phone: '',
-          tgId: '',
-          typeProduct: typeProduct[0],
-          otherProduct: '',
-          promotion: '',
-          typeWork: typeWork[0],
-          target: '',
-          viewer: '',
-          effect: '',
-          description: '',
-          voiceover: '',
-          timing: '',
-          place:'',
-          technicalSpecification: '',
-          deadline: ''
+        tgId.forEach((item) => {
+          sendToTelegram(item, data.id)
         })
-        setModalCreate(true)
+
+        sendMessageToTgGroup(data.id)
+
+      } else {
+        alert('Ошибка создания карточки в YouGile, попробуйте еще раз')
+        console.error('Ошибка создания карточки в YouGile')
+        return
+      }
+
+
+
+      } catch (error) {
+      console.log(`Ошибка создания карточки в YouGile ${error}`)
+      }
+  }
+
+
+
+  // create card to server
+
+
+  const createNewCardServer = async (card_id: string) => {
+    try {
+
+      const responce = await fetch('https://www.utvprod.tw1.ru/api/v1/message', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          id: id,
+          cardid: card_id,
+          title: card.title,
+          name: card.name,
+          phone: card.phone,
+          tgid: card.tgid,
+          typeproduct: typeProduct[0].label,
+          otherproduct: card.otherproduct,
+          promotion: card.promotion,
+          typework: typeWork[0].label,
+          target: card.target,
+          viewer: card.viewer,
+          effect: card.effect,
+          description: card.description,
+          voiceover: card.voiceover,
+          timing: card.timing,
+          place: card.place,
+          technicalspecification: card.technicalspecification,
+          deadline: card.deadline,
+        })
+      })
+        const data = await responce.json()
+        return data
+
+    } catch (error) {
+      console.log(`Что то пошло не так при отправке на сервер. Код ошибки ${error}`)
+    }
+  }
+
+
+  const getAllCardServer = async () => {
+    try {
+      const responce = await fetch('https://www.utvprod.tw1.ru/api/v1/message', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })
+
+      const data = await responce.json()
+      setCardId(data)
+      return data
+
+    } catch (error) {
+      console.log(`Что то пошло не так при получении данных с сервера. Код ошибки ${error}`)
+
+    }
+  }
+
+
+
+  // create new card
+
+  const createNewCard = () => {
+
+    try {
+
+      if(card.name !== '', card.phone !== '',  card.tgid !== '', card.promotion !== '', card.target !== '', card.viewer !== '', card.effect !== '', card.description !== '', card.voiceover !== '', card.timing !== '', card.place !== '', card.technicalspecification !== '', card.deadline !== '') {
+
+        createYGCard(ygKey)
+
+        setTimeout(() => {
+
+          setCard({
+            id: id,
+            cardid: '',
+            title: '',
+            name: '',
+            phone: '',
+            tgid: '',
+            typeproduct: typeProduct[0],
+            otherproduct: '',
+            promotion: '',
+            typework: typeWork[0],
+            target: '',
+            viewer: '',
+            effect: '',
+            description: '',
+            voiceover: '',
+            timing: '',
+            place:'',
+            technicalspecification: '',
+            deadline: ''
+          })
+          setModalCreate(true)
+        }, 1500)
 
       } else {
         setModalAlert(true)
       }
 
     } catch (error) {
-      console.log(error, 'Ошибка отправки сообщения')
+      console.log(`Ошибка отправки сообщения ${error}`)
     }
   }
 
@@ -286,14 +294,15 @@ const App = () => {
 
     return setCard({
         id: id,
+        cardid: '',
         title: '',
         name: '',
         phone: '',
-        tgId: '',
-        typeProduct: typeProduct[0],
-        otherProduct: '',
+        tgid: '',
+        typeproduct: typeProduct[0],
+        otherproduct: '',
         promotion: '',
-        typeWork: typeWork[0],
+        typework: typeWork[0],
         target: '',
         viewer: '',
         effect: '',
@@ -301,7 +310,7 @@ const App = () => {
         voiceover: '',
         timing: '',
         place:'',
-        technicalSpecification: '',
+        technicalspecification: '',
         deadline: ''
       })
   }
@@ -310,9 +319,36 @@ const App = () => {
   // sendToTelegram
 
 
-  const SendToTelegram = async () : Promise<any> => {
-    const TOKEN = '6561343238:AAHQWfNwKLmEu-hlH_y6M00MUB_XyZqTzk8'
-    const CHAT_ID = '-4171897222'
+  const sendToTelegram = async (CHAT_ID: string, cardId: any) : Promise<any> => {
+
+
+    const cardYGId = localStorage.getItem('card_id')
+
+    const cardTG = {
+      id: id,
+      cardid: JSON.stringify(cardId),
+      title: card.title,
+      name: card.name,
+      phone: card.phone,
+      tgid: card.tgid,
+      typeproduct: card.typeproduct,
+      otherproduct: card.otherproduct,
+      promotion: card.promotion,
+      typework: card.typework,
+      target: card.target,
+      viewer: card.viewer,
+      effect: card.effect,
+      description: card.description,
+      voiceover: card.voiceover,
+      timing: card.timing,
+      place: card.place,
+      technicalspecification: card.technicalspecification,
+      deadline: card.deadline,
+
+    }
+
+
+    const TOKEN = '6937785290:AAECcxUKtiOc0gU-R-y7GGZ71nI6MrWTXb8'
     const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
 
     try {
@@ -322,19 +358,66 @@ const App = () => {
         headers: {
           'Content-Type':'application/json'
         },
-        body: JSON.stringify({chat_id: CHAT_ID, parse_mode: 'html', text: message(card)})
+        body: JSON.stringify({chat_id: CHAT_ID, parse_mode: 'html', text: message(cardTG), reply_markup: {inline_keyboard: [[{ text: 'Согласовать', callback_data: 'agree' }, { text: 'Отклонить', callback_data: 'disagree' }, { text: 'Согласовать с замечанием', callback_data: 'comment' }]]}})
       })
       const data = await responce.json()
+      return data
 
     } catch (error) {
-
-      console.log(error)
-
+      console.log(`Сообщение не отправлено боту. Код ошибки ${error}`)
     }
   }
 
 
 
+
+  const sendMessageToTgGroup = async (cardId: any) => {
+    try {
+
+      const cardYGId = localStorage.getItem('card_id')
+      const cardTG = {
+        id: id,
+        cardid: JSON.stringify(cardId),
+        title: card.title,
+        name: card.name,
+        phone: card.phone,
+        tgid: card.tgid,
+        typeproduct: card.typeproduct,
+        otherproduct: card.otherproduct,
+        promotion: card.promotion,
+        typework: card.typework,
+        target: card.target,
+        viewer: card.viewer,
+        effect: card.effect,
+        description: card.description,
+        voiceover: card.voiceover,
+        timing: card.timing,
+        place: card.place,
+        technicalspecification: card.technicalspecification,
+        deadline: card.deadline,
+
+      }
+
+      const CHAT_ID = '-4171897222'
+      const TOKEN = '6561343238:AAH2kJ_QiwrLmLTwcKlUujv-fyxkTuvHNF4'
+      const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
+
+
+      const responce = await fetch(URL, {
+        method: 'POST',
+        headers: {
+          'Content-Type':'application/json'
+        },
+        body: JSON.stringify({chat_id: CHAT_ID, parse_mode: 'html', text: message(cardTG)})
+      })
+      const data = await responce.json()
+      return data
+
+
+    } catch (error) {
+      console.log(`Сообщение не отправлено ботом в группу. Код ошибки ${error}`)
+    }
+  }
 
 
 
