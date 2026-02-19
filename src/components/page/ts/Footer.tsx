@@ -28,7 +28,7 @@ const Footer: FC = () => {
 
       </Col>
 
-      <Col md={5} style={{textAlign: 'center', marginTop: '10px', color: 'white', fontSize: '12px'}}>V 3.5</Col>
+      <Col md={5} style={{textAlign: 'center', marginTop: '10px', color: 'white', fontSize: '12px'}}>V 3.5 *stable version</Col>
 
 
       <Col className='mt-3'><div className='footer-title'>Производство РА "Центр творчества" &#169; Все права защищины</div></Col>
