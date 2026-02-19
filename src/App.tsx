@@ -158,7 +158,7 @@ const App = () => {
         createNewCardServer(data.id)
 
         tgId.forEach((item) => {
-          sendToTelegram(item, data.id)
+           sendToTelegram(item, data.id)
         })
 
         sendMessageToTgGroup(data.id)
@@ -243,13 +243,13 @@ const App = () => {
 
   // create new card
 
-  const createNewCard = () => {
+  const createNewCard = async () => {
 
     try {
 
       if(card.name !== '', card.phone !== '',  card.tgid !== '', card.promotion !== '', card.target !== '', card.viewer !== '', card.effect !== '', card.description !== '', card.voiceover !== '', card.timing !== '', card.place !== '', card.technicalspecification !== '', card.deadline !== '') {
 
-        createYGCard(ygKey)
+        await createYGCard(ygKey)
 
         setTimeout(() => {
 
@@ -348,7 +348,7 @@ const App = () => {
     }
 
 
-    const TOKEN = '6561343238:AAH2kJ_QiwrLmLTwcKlUujv-fyxkTuvHNF4'
+    const TOKEN = '6937785290:AAECcxUKtiOc0gU-R-y7GGZ71nI6MrWTXb8'
     const URL = `https://api.telegram.org/bot${TOKEN}/sendMessage`
 
     try {
