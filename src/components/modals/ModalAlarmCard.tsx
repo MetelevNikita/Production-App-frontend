@@ -41,7 +41,7 @@ const ModalAlarmCard: FC<ModalAlarm> = ({ alert }) => {
 
                     <img className='modal-alert-icon-top' src={modalAlertImg} alt="modal-icon-ok" />
 
-                    <div className='modal-alert-title'>Заполните <br/> все поля</div>
+                    <div className='modal-alert-title'>Ошибка отправки сообщения</div>
 
                     <MyButtonModal title='Продолжить' img='' imgAlt='' onClick={() => {setModalAlert(false)}}></MyButtonModal>
 

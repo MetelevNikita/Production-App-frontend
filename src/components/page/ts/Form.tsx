@@ -25,16 +25,19 @@ import { typeWork } from '../../server/server'
 
 
 
-interface Form {
+interface FormProps {
   cards: any
-  createCard: () => any
+  createCard: () => Promise<any>
   clearCard: () => any
 }
 
 
-const Form: FC<Form> = ({cards, createCard, clearCard}) => {
+const Form: FC<FormProps> = ({cards, createCard, clearCard}) => {
 
   const {card, setCard} = cards
+  const isOtherProduct = typeof card.typeproduct !== 'string' && card.typeproduct?.value === 'other'
+
+  console.log(card)
 
 
   return (
@@ -51,9 +54,9 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
 
         {/* select */}
 
-        <MySelect title='Тип продукта' option={typeProduct} onChange={(e) => setCard({...card, typeproduct: e})} placeholder={'Выберите тип продукта'}></MySelect>
+        <MySelect title='Тип продукта' option={typeProduct} value={card.typeproduct} onChange={(e) => setCard({...card, typeproduct: e})} placeholder={'Выберите тип продукта'}></MySelect>
 
-        {(card.typeproduct.value === 'other') ? <MyInput place='введите текст' type='text' title='другой тип продукта' value={card.otherproduct} onChange={(e) => {setCard({...card, otherproduct: e.target.value})}}></MyInput> : <></>}
+        {isOtherProduct ? <MyInput place='введите текст' type='text' title='другой тип продукта' value={card.otherproduct} onChange={(e) => {setCard({...card, otherproduct: e.target.value})}}></MyInput> : <></>}
 
 
         {/*  */}
@@ -64,7 +67,7 @@ const Form: FC<Form> = ({cards, createCard, clearCard}) => {
         {/* select */}
 
 
-        <MySelect title='Тип работ' option={typeWork} onChange={(e) => setCard({...card, typework: e})} placeholder={'Выберите тип работ'}></MySelect>
+        <MySelect title='Тип работ' option={typeWork} value={card.typework} onChange={(e) => setCard({...card, typework: e})} placeholder={'Выберите тип работ'}></MySelect>
 
 
         {/*  */}

@@ -1,16 +1,13 @@
 
 export type CardType = {
-
-  id: string | number,
-  cardid: string | any,
   title: string
   name: string,
   phone: string
   tgid: string,
-  typeproduct: {label: string, value: string} | string,
+  typeproduct: {label: string, value: string},
   otherproduct?: string
   promotion: string,
-  typework: {label: string, value: string} | string,
+  typework: {label: string, value: string},
   target: string
   viewer: string,
   effect: string,
